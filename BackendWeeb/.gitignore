@@ -1,3 +1,5 @@
+
+*.sqlite3
 BackendWeeb/env/
 BackendWeeb/db.sqlite3
 __pycache__/
