@@ -4,6 +4,7 @@ import os # Un module Python standard qui nous permet d'interagir avec le systè
 import dj_database_url # Le package que nous avons installé pour nous simplifier la configuration de la base de données
 from .base import * # Cette ligne est fondamentale. Elle dit : "Charge toutes les configurations du fichier base.py". Cela nous évite de dupliquer des dizaines de lignes (INSTALLED_APPS, MIDDLEWARE, etc.) et nous permet de nous concentrer uniquement sur ce qui change en production.
 import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
  # ==============================================================
  # Sécurité
