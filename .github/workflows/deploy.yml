@@ -33,13 +33,13 @@ jobs:
       
       - name: Test Django migrations
         env: 
-          DJANGO_SETTINGS_MODULE: BackendWeeb.settings.production
+          DJANGO_SETTINGS_MODULE: weeb_backend.settings.production
         run: |
           python manage.py check
         
       - name: Run Django tests
         env: 
-          DJANGO_SETTINGS_MODULE: BackendWeeb.settings.production
+          DJANGO_SETTINGS_MODULE: weeb_backend.settings.production
         run: |
           python manage.py test
 
