@@ -1,7 +1,6 @@
 name : Django CICD pipeline
 
 on : 
-  
   push:
     branches: [ main ]
   pull_request:
@@ -19,7 +18,7 @@ jobs:
       - name: Set up python
         uses: actions/setup-python@v4
         with: 
-          python-version: "3.11"
+          python-version: "3.12"
           cache: "pip"
       
       - name: Install dependencies
