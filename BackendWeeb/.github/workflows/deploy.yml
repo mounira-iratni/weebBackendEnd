@@ -12,6 +12,9 @@ jobs:
     name: Test the Django application
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: BackendWeeb  
     steps: 
       - name: checkout repository
         uses: actions/checkout@v4
@@ -21,6 +24,7 @@ jobs:
         with: 
           python-version: "3.12"
           cache: "pip"
+          cache-dependency-path: BackendWeeb/requirements.txt
       
       - name: Install dependencies
         run: |
