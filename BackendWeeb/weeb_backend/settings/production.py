@@ -3,6 +3,7 @@
 import os # Un module Python standard qui nous permet d'interagir avec le système d'exploitation, et plus particulièrement de lire les variables d'environnement .env
 import dj_database_url # Le package que nous avons installé pour nous simplifier la configuration de la base de données
 from .base import * # Cette ligne est fondamentale. Elle dit : "Charge toutes les configurations du fichier base.py". Cela nous évite de dupliquer des dizaines de lignes (INSTALLED_APPS, MIDDLEWARE, etc.) et nous permet de nous concentrer uniquement sur ce qui change en production.
+import sentry_sdk
 
  # ==============================================================
  # Sécurité
@@ -31,3 +32,15 @@ DATABASES = {
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+
+SENTRY_DSN = os.environ.get('SENTRY_DSN')
+
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        integrations=[DjangoIntegration()],
+        traces_sample_rate=1.0, # Capture 100% des transactions pour le monitoring de perf.
+        send_default_pii=True
+    )
+    
