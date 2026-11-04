@@ -52,6 +52,21 @@ class AccountsAuthAPITests(APITestCase):
         response = self.client.post(self.signup_url, self.user_data, format="json")
         self.assertIn(response.status_code, [status.HTTP_201_CREATED, status.HTTP_200_OK])
 
+    def test_signup_existing_email(self):
+        """
+           Vérifie qu'on ne peut pas créer deux comptes avec le même email.
+        """
+
+        duplicate_data = {
+            "first_name": "Autre",
+            "last_name": "Personne",
+            "email": "activeuser@exemple.com",
+            "password": "autrepassword123!",
+        }
+
+        response = self.client.post(self.signup_url, duplicate_data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     """
         Tests Connexion
     """
@@ -68,3 +83,16 @@ class AccountsAuthAPITests(APITestCase):
 
         response = self.client.post(self.signin_url, credentials, format="json")
         self.assertIn(response.status_code, [status.HTTP_200_OK, status.HTTP_201_CREATED])
+
+    def test_signin_wrong_password(self):
+        """
+           Vérifie qu'un utilisateur ne peut pas se connecter avec un mot de passe incorrect et retourne 401 Unauthorized
+        """
+
+        credentials = {
+            "email": self.active_user.email,
+            "password": "wrongpassword",
+        }
+
+        response = self.client.post(self.signin_url, credentials, format="json")
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
